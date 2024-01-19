@@ -3,5 +3,4 @@ obj_*
 *.elf
 *.map
 .DS_Store
-qmk_firmware/
-build/
+qmk-keyboards/build/
