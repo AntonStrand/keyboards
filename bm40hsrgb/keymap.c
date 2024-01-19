@@ -245,18 +245,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * ,-----------------------------------------------------------------------------------.
      * |   ~  |   "  |   '  |   |  |   &  |   ´  |   $  |   {  |   (  |  )   |  }   |   ^  |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * |      |   @  |  >>  |  ->  |  |>  |  =>  |   #  |   [  |   ]  |   ;  |   :  |   `  |
+     * |      |   @  |  >>  |  ->  |   /  |  =>  |   #  |   [  |   ]  |   ;  |   :  |   `  |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * |      |   +  |   -  |   *  |  /   |  =   |   %  |   \  |   <  |   >  |   _  |   '  |
+     * |      |   +  |   -  |   *  |   =  |  |>  |   %  |   \  |   <  |   >  |   _  |   '  |
      * |------+------+------+------+------+------+------+------+------+------+------+------|
-     * |      |      |      |      |      |     Tab     |Adjust|      |      |      |   !  |
+     * |      |      |      |      |      |             |Adjust|      |      |      |   !  |
      * `-----------------------------------------------------------------------------------'
      */
-
     [_LOWER] = LAYOUT_planck_mit(
         SE_TILD, SE_DQUO, SE_QUOT, SE_PIPE,      SE_AMPR, KC_EQL,    SE_DLR,  SE_LCBR, SE_LPRN, SE_RPRN, SE_RCBR, SE_CIRC,
-        ______,  SE_AT,   COMPOSE, SKINNY_ARROW, PIPE,    FAT_ARROW, SE_HASH, SE_LBRC, SE_RBRC, SE_SCLN, SE_COLN, SE_GRV,
-        ______,  SE_PLUS, SE_MINS, SE_ASTR,      SE_SLSH, SE_EQL,    SE_PERC, SE_BSLS, SE_LABK, SE_RABK, SE_UNDS, SE_QUOT,
+        ______,  SE_AT,   COMPOSE, SKINNY_ARROW, SE_SLSH, FAT_ARROW, SE_HASH, SE_LBRC, SE_RBRC, SE_SCLN, SE_COLN, SE_GRV,
+        ______,  SE_PLUS, SE_MINS, SE_ASTR,      SE_EQL,  PIPE,      SE_PERC, SE_BSLS, SE_LABK, SE_RABK, SE_UNDS, SE_QUOT,
         ______,  ______,  ______,  ______,       ______,        ______,       ______,  ______,  ______,  ______,  KC_EXLM
     ),
 
