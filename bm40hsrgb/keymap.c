@@ -39,7 +39,7 @@ enum layers {
 #define LWR_BSP LT(_LOWER, KC_BSPC)
 #define NUM_SPC LT(_NUMBER, KC_SPC)
 
-#define GUI_ESC LGUI_T(KC_ESC)
+#define CTRL_ESC LCTL_T(KC_ESC)
 
 #define CK_CUT LGUI(KC_X)
 #define CK_COPY LGUI(KC_C)
@@ -201,7 +201,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
         case FLASH:
             if (record->event.pressed) {
-                send_string("make flash bm40hsrgb" SS_TAP(X_ENTER));
+                send_string("make flash-bm40hsrgb" SS_TAP(X_ENTER));
                 reset_keyboard();
             }
             return false;
@@ -236,7 +236,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      */
     [_QWERTY] = LAYOUT_planck_mit(
         KC_TAB,   KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,  KC_I,    KC_O,    KC_P,    SE_ARNG,
-        GUI_ESC,  KC_A,    KC_S,    LALT_D,  LGUI_F,  KC_G,    KC_H,    RG_J,  RA_K,    KC_L,    SE_ODIA, SE_ADIA,
+        CTRL_ESC,  KC_A,    KC_S,    LALT_D,  LGUI_F,  KC_G,    KC_H,    RG_J,  RA_K,    KC_L,    SE_ODIA, SE_ADIA,
         OSM_SHFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,  KC_COMM, KC_DOT,  SE_MINS, SFT_QUOT,
         OSM_CTRL, KC_LCTL, KC_LALT, OSM_CTRL, LWR_BSP,    NUM_SPC,    RSE_ENT,  OSM_SHFT, KC_RALT, KC_RCTL, GUI_QM
     ),
