@@ -67,6 +67,8 @@ enum layers {
 
 // Hack since OSM changes which key is being triggered
 #define OSM_CTRALT OSM(KC_RSFT)
+#define OSM_MEH OSM(KC_RGUI)
+#define OSM_HYPR OSM(KC_RALT)
 #define OSM_SHFT OSM(KC_LALT)
 #define OSM_CTRL OSM(KC_LSFT)
 
@@ -271,9 +273,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * `-----------------------------------------------------------------------------------'
      */
     [_RAISE] = LAYOUT_planck_mit(
-        S(KC_TAB), DM_REC2,  DM_PLY2,  DM_PLY1,   DM_REC1,    _______, CK_REDO, CK_UNDO,    CK_CUT,  CK_COPY, CK_PASTE, KC_BSPC,
-        _______,   KC_LCTL,  KC_LSFT,  KC_LALT,   KC_LGUI,    APP,      TG_CMT, KC_LEFT,    KC_DOWN, KC_UP,   KC_RGHT,  KC_BSLS,
-        _______,   PRNT_SEL, PRNT_ALL, PRNT_MENU, MO(_RAPID), _______, _______, OSM_CTRALT, QK_AREP, QK_REP,  _______,  KC_ENT,
+        S(KC_TAB), DM_REC2,  DM_PLY2,  DM_PLY1,   DM_REC1,    _______, CK_REDO, CK_UNDO,    CK_CUT,  CK_COPY,  CK_PASTE, KC_BSPC,
+        _______,   KC_LCTL,  KC_LSFT,  KC_LALT,   KC_LGUI,    APP,      TG_CMT, KC_LEFT,    KC_DOWN, KC_UP,    KC_RGHT,  KC_BSLS,
+        _______,   PRNT_SEL, PRNT_ALL, PRNT_MENU, MO(_RAPID), _______, _______, OSM_CTRALT, OSM_MEH, OSM_HYPR, _______,  KC_ENT,
         _______,   _______, _______, _______, _______,             _______,     _______,    _______, _______, _______,  _______
     ),
 
@@ -317,7 +319,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_NUMBER] = LAYOUT_planck_mit(
         KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,
         SE_MINS, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    SE_PLUS,
-        KC_SLSH, _______, _______, _______, SE_UNDS, _______, SE_DLR, _______, _______, _______, _______, SE_ASTR,
+        KC_SLSH, _______, _______, _______, SE_UNDS, _______, _______, SE_DLR,  _______, _______, _______, SE_ASTR,
         _______, _______, _______, _______, _______,      _______,     _______, _______, _______, _______, _______
     ),
     /* Number
