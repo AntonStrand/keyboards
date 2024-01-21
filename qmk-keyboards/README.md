@@ -18,3 +18,20 @@ Run `make lint-<keyboard>` to lint the keymap
 
 - [ ] Make `crkbd` compile again.
 - [ ] Add my missing keyboard.
+
+## Key code mapping
+
+The modifier keys are mapped differently for a swedish Mac. For future reference I chose to list them here.
+
+| Key       | Result                   |
+| --------- | ------------------------ |
+| `KC_LALT` | `shift`                  |
+| `KC_LCTL` | `N/A`                    |
+| `KC_LGUI` | `shift` + `ctrl`         |
+| `KC_LSFT` | `ctrl`                   |
+| `KC_RALT` | `shift` + `alt`          |
+| `KC_RCTL` | `alt`                    |
+| `KC_RGUI` | `shift` + `ctrl` + `alt` |
+| `KC_RSFT` | `ctrl` + `alt`           |
+| `KC_HYPR` | `N/A`                    |
+| `KC_MEH`  | `N/A`                    |
