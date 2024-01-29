@@ -88,6 +88,9 @@ enum custom_keycodes {
   FLASH,
   CK_BASE,
   GUI_QM,
+  CARET,
+  BACKTICK,
+  TILDE,
   KEYMAP_RANGE // use "KEYMAP_RANGE" for keymap specific codes
 };
 
@@ -217,6 +220,26 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   case GUI_QM:
     gui_qm(record->event.pressed);
     break;
+
+  case CARET:
+    if (record->event.pressed) {
+      SEND_STRING(SS_LSFT("^ "));
+    }
+    return false;
+
+  case TILDE:
+    if (record->event.pressed) {
+      SEND_STRING(SS_ALGR("~ "));
+    }
+    return false;
+
+  case BACKTICK:
+    if (record->event.pressed) {
+      SEND_STRING(SS_LSFT("` "));
+    }
+    return false;
+  }
+
   return true;
 };
 
@@ -253,8 +276,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * `-----------------------------------------------------------------------------------'
      */
     [_LOWER] = LAYOUT_planck_mit(
-        SE_TILD, SE_DQUO, SE_QUOT, SE_PIPE,      SE_AMPR, KC_EQL,    SE_DLR,  SE_LCBR, SE_LPRN, SE_RPRN, SE_RCBR, SE_CIRC,
-        ______,  SE_AT,   COMPOSE, SKINNY_ARROW, SE_SLSH, FAT_ARROW, SE_HASH, SE_LBRC, SE_RBRC, SE_SCLN, SE_COLN, SE_GRV,
+        TILDE, SE_DQUO, SE_QUOT, SE_PIPE,      SE_AMPR, KC_EQL,    SE_DLR,  SE_LCBR, SE_LPRN, SE_RPRN, SE_RCBR, CARET,
+        ______,  SE_AT,   COMPOSE, SKINNY_ARROW, SE_SLSH, FAT_ARROW, SE_HASH, SE_LBRC, SE_RBRC, SE_SCLN, SE_COLN, BACKTICK,
         ______,  SE_PLUS, SE_MINS, SE_ASTR,      SE_EQL,  PIPE,      SE_PERC, SE_BSLS, SE_LABK, SE_RABK, SE_UNDS, SE_QUOT,
         ______,  ______,  ______,  ______,       ______,        ______,       ______,  ______,  ______,  ______,  KC_EXLM
     ),
