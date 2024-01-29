@@ -14,24 +14,24 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include QMK_KEYBOARD_H
-#include "quantum.h"
-#include "version.h"
-#include "sendstring_swedish_mac.h"
 #include "keymap_swedish_mac.h"
+#include "quantum.h"
+#include "sendstring_swedish_mac.h"
 #include "space_cadet.c"
+#include "version.h"
 
 enum layers {
-    _QWERTY,
-    _LOWER,
-    _RAISE,
-    _RAPID,
-    _ADJUST,
-    _NUMBER,
-    _NUM_PAD,
-    _FN,
-    _GAME,
-    _GAME_NUMS
-    //
+  _QWERTY,
+  _LOWER,
+  _RAISE,
+  _RAPID,
+  _ADJUST,
+  _NUMBER,
+  _NUM_PAD,
+  _FN,
+  _GAME,
+  _GAME_NUMS
+  //
 };
 
 #define ______ KC_TRNS
@@ -72,60 +72,60 @@ enum layers {
 #define OSM_SHFT OSM(KC_LALT)
 #define OSM_CTRL OSM(KC_LSFT)
 
-
 // Define all of
 enum custom_keycodes {
-    NO_KEY_PRESS = (UINT16_MAX - 1),
-    PIPE         = SAFE_RANGE,
-    COMPOSE,
-    SKINNY_ARROW,
-    FAT_ARROW,
-    APP,
-    R_LEFT,
-    R_DOWN,
-    R_UP,
-    R_RIGHT,
-    COMPILE,
-    FLASH,
-    CK_BASE,
-    GUI_QM,
-    KEYMAP_RANGE  // use "KEYMAP_RANGE" for keymap specific codes
+  NO_KEY_PRESS = (UINT16_MAX - 1),
+  PIPE = SAFE_RANGE,
+  COMPOSE,
+  SKINNY_ARROW,
+  FAT_ARROW,
+  APP,
+  R_LEFT,
+  R_DOWN,
+  R_UP,
+  R_RIGHT,
+  COMPILE,
+  FLASH,
+  CK_BASE,
+  GUI_QM,
+  KEYMAP_RANGE // use "KEYMAP_RANGE" for keymap specific codes
 };
 
 #include "repeat_key_press.c"
 
 /**
- * Hold modifier until is_pressed is false. The key is tapped once when is_presses becomes true.
+ * Hold modifier until is_pressed is false. The key is tapped once when
+ * is_presses becomes true.
  */
 void tap_hold_mod(uint16_t mod, uint16_t kc, bool is_pressed) {
-    if (is_pressed) {
-        register_code16(mod);
-        tap_code16(kc);
-    } else {
-        unregister_code16(mod);
-    }
+  if (is_pressed) {
+    register_code16(mod);
+    tap_code16(kc);
+  } else {
+    unregister_code16(mod);
+  }
 }
 
 /**
  * Tap key while a modifier is held.
  */
 void mod_tap(uint16_t mod, uint16_t kc) {
-    register_code16(mod);
-    tap_code16(kc);
-    unregister_code16(mod);
+  register_code16(mod);
+  tap_code16(kc);
+  unregister_code16(mod);
 }
 
 void clear_keyboard_mods(void) {
-    clear_mods();
-    clear_oneshot_mods();
+  clear_mods();
+  clear_oneshot_mods();
 }
 
 void set_color(int from, int to, int r, int g, int b) {
 #ifdef RGB_MATRIX_ENABLE
-    int i;
-    for (i = from; i <= to; i++) {
-        rgb_matrix_set_color(i, r, g, b);
-    }
+  int i;
+  for (i = from; i <= to; i++) {
+    rgb_matrix_set_color(i, r, g, b);
+  }
 #endif
 }
 
@@ -133,93 +133,91 @@ __attribute__((weak)) void matrix_init_keymap(void) {}
 
 void matrix_init_user(void) {
 #ifdef RGBLIGHT_ENABLE
-    rgblight_enable();
+  rgblight_enable();
 #endif
 #ifdef COMBO_ENABLE
-    combo_enable();
+  combo_enable();
 #endif
-    matrix_init_keymap();
+  matrix_init_keymap();
 }
 
 // To be able to use it in a keymap
 __attribute__((weak)) void matrix_scan_keymap(void) {}
 
 void matrix_scan_user(void) {
-    repeat_pressed_key();
-    matrix_scan_keymap();
+  repeat_pressed_key();
+  matrix_scan_keymap();
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
-    bool is_shifted = keyboard_report->mods & MOD_MASK_SHIFT;
+  bool is_shifted = keyboard_report->mods & MOD_MASK_SHIFT;
 
-    switch (keycode) {
-        case PIPE:
-            if (record->event.pressed) {
-                send_string("|>");
-            }
-            break;
-
-        case COMPOSE:
-            if (record->event.pressed) {
-                send_string(">>");
-            }
-            break;
-
-        case SKINNY_ARROW:
-            if (record->event.pressed) {
-                send_string("->");
-            }
-            break;
-
-        case FAT_ARROW:
-            if (record->event.pressed) {
-                send_string("=>");
-            }
-            break;
-
-        case APP:
-            tap_hold_mod(KC_LCMD, KC_TAB, record->event.pressed);
-            break;
-
-        case R_LEFT:
-            set_pressed_key(R_LEFT, record->event.pressed, is_shifted);
-            return false;
-        case R_UP:
-            set_pressed_key(R_UP, record->event.pressed, is_shifted);
-            return false;
-        case R_RIGHT:
-            set_pressed_key(R_RIGHT, record->event.pressed, is_shifted);
-            return false;
-        case R_DOWN:
-            set_pressed_key(R_DOWN, record->event.pressed, is_shifted);
-            return false;
-
-        case COMPILE:
-            if (record->event.pressed) {
-                send_string("make bm40hsrgb" SS_TAP(X_ENTER));
-            }
-            return false;
-
-        case FLASH:
-            if (record->event.pressed) {
-                send_string("make flash-bm40hsrgb" SS_TAP(X_ENTER));
-                reset_keyboard();
-            }
-            return false;
-
-        case CK_BASE:
-            if (record->event.pressed) {
-                layer_move(_QWERTY);
-            }
-            return false;
-
-        case GUI_QM:
-            gui_qm(record->event.pressed);
-            break;
+  switch (keycode) {
+  case PIPE:
+    if (record->event.pressed) {
+      send_string("|>");
     }
+    break;
 
-    return true;
+  case COMPOSE:
+    if (record->event.pressed) {
+      send_string(">>");
+    }
+    break;
+
+  case SKINNY_ARROW:
+    if (record->event.pressed) {
+      send_string("->");
+    }
+    break;
+
+  case FAT_ARROW:
+    if (record->event.pressed) {
+      send_string("=>");
+    }
+    break;
+
+  case APP:
+    tap_hold_mod(KC_LCMD, KC_TAB, record->event.pressed);
+    break;
+
+  case R_LEFT:
+    set_pressed_key(R_LEFT, record->event.pressed, is_shifted);
+    return false;
+  case R_UP:
+    set_pressed_key(R_UP, record->event.pressed, is_shifted);
+    return false;
+  case R_RIGHT:
+    set_pressed_key(R_RIGHT, record->event.pressed, is_shifted);
+    return false;
+  case R_DOWN:
+    set_pressed_key(R_DOWN, record->event.pressed, is_shifted);
+    return false;
+
+  case COMPILE:
+    if (record->event.pressed) {
+      send_string("make bm40hsrgb" SS_TAP(X_ENTER));
+    }
+    return false;
+
+  case FLASH:
+    if (record->event.pressed) {
+      send_string("make flash-bm40hsrgb" SS_TAP(X_ENTER));
+      reset_keyboard();
+    }
+    return false;
+
+  case CK_BASE:
+    if (record->event.pressed) {
+      layer_move(_QWERTY);
+    }
+    return false;
+
+  case GUI_QM:
+    gui_qm(record->event.pressed);
+    break;
+  return true;
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -363,56 +361,50 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // clang-format on
 
 /**
-* Colors based on Catppuccin Mocha  
-* https://www.figma.com/community/file/1275541990963543565/catppuccin-mocha
-* https://github.com/catppuccin/palette/blob/main/palette.json
-*/
-#define MAUVE       0x88, 0x39, 0xEF
-#define PEACH       0xFE, 0x64, 0xB0
-#define MAROON      0xE6, 0x45, 0x53
-#define YELLOW      0xDF, 0x8E, 0x1D
-#define RED         0xD2, 0xF0, 0x39
-#define SKY         0x89, 0xDC, 0xEB
+ * Colors based on Catppuccin Mocha
+ * https://www.figma.com/community/file/1275541990963543565/catppuccin-mocha
+ * https://github.com/catppuccin/palette/blob/main/palette.json
+ */
+#define MAUVE 0x88, 0x39, 0xEF
+#define PEACH 0xFE, 0x64, 0xB0
+#define MAROON 0xE6, 0x45, 0x53
+#define YELLOW 0xDF, 0x8E, 0x1D
+#define RED 0xD2, 0xF0, 0x39
+#define SKY 0x89, 0xDC, 0xEB
 
 #ifdef RGB_MATRIX_ENABLE
 bool rgb_matrix_indicators_kb(void) {
-    switch (get_highest_layer(layer_state)) {
-        case _RAISE:
-            // set_color(19, 22, RGB_TEAL);
-            // rgb_matrix_set_color(42, RGB_TEAL);
-            rgb_matrix_set_color_all(PEACH);
-            break;
-        case _LOWER:
-            rgb_matrix_set_color_all(MAROON);
-            // rgb_matrix_set_color(40, 0xFF, 0x00, 0x00);
-            break;
-        case _NUMBER:
-            // set_color(7, 9, RGB_AZURE);
-            // set_color(19, 21, RGB_AZURE);
-            // set_color(31, 33, RGB_AZURE);
-            // rgb_matrix_set_color(43, RGB_AZURE);
-            // rgb_matrix_set_color(36, 0x00, 0xFF, 0x00);
-            rgb_matrix_set_color_all(MAUVE);
-            set_color(13, 22, SKY);
-            set_color(25, 34, SKY);
-            break;
-        case _ADJUST:
-            rgb_matrix_set_color_all(RED);
-            break;
-        default:
-            rgb_matrix_set_color_all(MAUVE);
-            break;
-    }
-    const uint8_t mods = get_mods() | get_oneshot_mods() | get_weak_mods();
-    if (mods == MOD_BIT(KC_LSFT) || (mods == MOD_BIT(KC_RSFT))) {
-        set_color(1, 10, YELLOW);
-        set_color(13, 22, YELLOW);
-        set_color(25, 34, YELLOW);
-        set_color(36, 45, YELLOW);
-        return true;
-    }
+  switch (get_highest_layer(layer_state)) {
+  case _RAISE:
+    rgb_matrix_set_color_all(PEACH);
+    break;
+  case _LOWER:
+    rgb_matrix_set_color_all(MAROON);
+    break;
+  case _NUMBER:
+    rgb_matrix_set_color_all(MAUVE);
+    set_color(13, 22, SKY);
+    set_color(25, 34, SKY);
+    break;
+  case _ADJUST:
+    rgb_matrix_set_color_all(RED);
+    break;
+  default:
+    rgb_matrix_set_color_all(MAUVE);
+    break;
+  }
+  const uint8_t mods = get_mods() | get_oneshot_mods() | get_weak_mods();
+  if (mods == MOD_BIT(KC_LSFT) || (mods == MOD_BIT(KC_RSFT))) {
+    set_color(1, 10, YELLOW);
+    set_color(13, 22, YELLOW);
+    set_color(25, 34, YELLOW);
+    set_color(36, 45, YELLOW);
     return true;
+  }
+  return true;
 }
 #endif
 
-layer_state_t layer_state_set_user(layer_state_t state) { return update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST); }
+layer_state_t layer_state_set_user(layer_state_t state) {
+  return update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
+}
